@@ -1,6 +1,7 @@
 import { View, Text, Image, TextInput, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import Button from '@/components/Button';
 
 const CreatePost = () => {
   const [caption, setCaption] = useState('');
@@ -31,7 +32,7 @@ const CreatePost = () => {
       />
 
       <Text
-        className="text-xl px-3 py-3 my-2 text-center text-cyan-800 w-48 mx-auto bg-gray-200 rounded"
+        className="text-xl px-3 py-3 my-2 text-center text-cyan-800 w-fit mx-auto bg-gray-200 rounded"
         onPress={pickImage}
       >
         Change Image
@@ -46,9 +47,7 @@ const CreatePost = () => {
       </View>
 
       <View className="items-center px-3 mt-auto">
-        <Pressable className="bg-blue-500 px-10 w-full py-3 rounded-lg">
-          <Text className="text-white text-xl text-center">Share</Text>
-        </Pressable>
+        <Button title="Share" onPress={pickImage} />
       </View>
     </View>
   );

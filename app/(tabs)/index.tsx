@@ -4,7 +4,7 @@ import React from 'react';
 const FeedScreen = () => {
   return (
     <View>
-      <Text>FeedScreen</Text>
+      <Text className="text-3xl">FeedScreen</Text>
     </View>
   );
 };

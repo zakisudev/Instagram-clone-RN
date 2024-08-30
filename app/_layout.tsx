@@ -1,7 +1,8 @@
 import React from 'react';
 import { Stack } from 'expo-router';
+import '../global.css';
 
-const RootLayout = ({ children }: any) => {
+const RootLayout = () => {
   return <Stack screenOptions={{ headerShown: false }} />;
 };
 

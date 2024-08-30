@@ -31,7 +31,7 @@ const TabsLayout = () => {
         options={{
           headerTitle: 'Profile',
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={26} color={color} />
+            <FontAwesome name="user" size={24} color={color} />
           ),
         }}
       />

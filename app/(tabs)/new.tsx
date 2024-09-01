@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Button from '@/components/Button';
 import { uploadImage } from '@/lib/cloudinary';
+import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/providers/AuthProvider';
+import { router } from 'expo-router';
 
 const CreatePost = () => {
   const [caption, setCaption] = useState('');
-  const [image, setImage] = useState(
-    'https://facesconsent.com/images/default-product-image.png'
-  );
+  const [image, setImage] = useState('');
+
+  const { session } = useAuth();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -29,16 +32,35 @@ const CreatePost = () => {
 
     const res = await uploadImage(image);
 
-    return res?.public_id;
+    const { data, error } = await supabase
+      .from('posts')
+      .insert([
+        {
+          caption,
+          image: res.public_id,
+          userId: session?.user.id,
+        },
+      ])
+      .select();
+
+    if (error) {
+      console.log('error', error);
+    }
+
+    router.push('/(tabs)');
   };
 
   return (
     <View className="flex-1 bg-white w-full">
-      <Image
-        source={{ uri: image }}
-        className="w-full h-96 shadow-lg"
-        resizeMode="contain"
-      />
+      {image ? (
+        <Image
+          source={{ uri: image }}
+          className="w-full h-96 shadow-lg"
+          resizeMode="contain"
+        />
+      ) : (
+        <View className="w-full h-96 shadow-lg bg-slate-200" />
+      )}
 
       <Text
         className="text-xl px-3 py-3 my-2 text-center text-cyan-800 w-fit mx-auto bg-gray-200 rounded"

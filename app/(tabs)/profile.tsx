@@ -4,11 +4,13 @@ import * as ImagePicker from 'expo-image-picker';
 import Button from '@/components/Button';
 
 const ProfileScreen = () => {
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const [avatar, setAvatar] = useState(
     'https://facesconsent.com/images/default-product-image.png'
   );
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [website, setWebsite] = useState('');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -23,6 +25,17 @@ const ProfileScreen = () => {
       setAvatar(result.assets[0].uri);
     }
   };
+
+  if (!status) {
+    return (
+      <View className="w-full items-center p-3 flex-1">
+        <Text className="text-xl text-center">
+          You need to grant permission to access the media library
+        </Text>
+        <Button title="Request Permission" onPress={requestPermission} />
+      </View>
+    );
+  }
 
   return (
     <View className="w-full items-center p-3 flex-1">
@@ -54,6 +67,16 @@ const ProfileScreen = () => {
           value={username}
           onChangeText={(e) => setUsername(e)}
           placeholder="Username"
+          className="p-3 bg-gray-200 rounded-lg h-16 w-full text-xl"
+        />
+      </View>
+
+      <View className="w-full p-3">
+        <Text className="text-xl">Website</Text>
+        <TextInput
+          value={website}
+          onChangeText={(e) => setWebsite(e)}
+          placeholder="https://example.com"
           className="p-3 bg-gray-200 rounded-lg h-16 w-full text-xl"
         />
       </View>

@@ -2,6 +2,7 @@ import { View, Text, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Button from '@/components/Button';
+import { supabase } from '@/lib/supabase';
 
 const ProfileScreen = () => {
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
@@ -83,7 +84,7 @@ const ProfileScreen = () => {
 
       <View className="items-center px-3 mt-auto w-full gap-3">
         <Button title="Save Changes" onPress={() => console.log('Save')} />
-        <Button title="Logout" onPress={() => console.log('Logout')} />
+        <Button title="Logout" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
   );

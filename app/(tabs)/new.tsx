@@ -1,7 +1,8 @@
-import { View, Text, Image, TextInput, Pressable } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import Button from '@/components/Button';
+import { uploadImage } from '@/lib/cloudinary';
 
 const CreatePost = () => {
   const [caption, setCaption] = useState('');
@@ -21,6 +22,14 @@ const CreatePost = () => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+  };
+
+  const createPost = async () => {
+    if (!image) return;
+
+    const res = await uploadImage(image);
+
+    return res?.public_id;
   };
 
   return (
@@ -47,7 +56,7 @@ const CreatePost = () => {
       </View>
 
       <View className="items-center px-3 mt-auto">
-        <Button title="Share" onPress={pickImage} />
+        <Button title="Share" onPress={createPost} />
       </View>
     </View>
   );

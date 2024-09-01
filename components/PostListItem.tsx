@@ -1,7 +1,6 @@
 import { View, Text, Image, useWindowDimensions, FlatList } from 'react-native';
 import React from 'react';
 import { AntDesign, Ionicons, Feather } from '@expo/vector-icons';
-import posts from '@/assets/data/posts.json';
 import { cld } from '../lib/cloudinary';
 import { AdvancedImage } from 'cloudinary-react-native';
 import { thumbnail } from '@cloudinary/url-gen/actions/resize';
@@ -54,7 +53,7 @@ const RenderItem = ({ post }: any) => {
   );
 };
 
-const PostListItem = () => {
+const PostListItem = ({ posts }: any) => {
   return (
     <View className="w-full">
       <FlatList
